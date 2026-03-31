@@ -29,5 +29,30 @@ public class FiapBankAtm {
             }
         } while (!senhaCadastrada.matches(regraSenhaForte));
 
+        int tentativas = 0;
+        boolean autenticado = false;
+
+        // Limite máximo de 3 tentativas de login
+        while (tentativas < 3) {
+            System.out.print("\nDigite sua senha para acessar o terminal: ");
+            String senhaLogin = scanner.nextLine();
+
+            // PROIBIDO comparar Strings usando o operador == [cite: 72]
+            if (senhaLogin.equals(senhaCadastrada)) {
+                autenticado = true;
+                break;
+            } else {
+                tentativas++;
+                System.out.println("Senha incorreta! Tentativa " + tentativas + " de 3.");
+            }
+        }
+
+        if (!autenticado) {
+            // Se errar 3 vezes, imprime mensagem e encerra a aplicação
+            System.out.println("\nACESSO BLOQUEADO");
+            scanner.close();
+            return;
+        }
+
     }
 }
